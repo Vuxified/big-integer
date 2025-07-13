@@ -29,43 +29,30 @@ static std::tuple<Integer, Integer, Integer> extended_gcd(const Integer& a, cons
 
 // Returns x such that (a * x) % m == 1
 Integer mod_inverse(const Integer& a, const Integer& m) {
-    Integer nonneg_a = a;
-    if (m == Integer(0)) {
+    if (m == Integer(0))
         throw std::invalid_argument("Modulus must be non-zero");
-    }
-    if (m == Integer(1)) {
-        return Integer(0); // Inverse of any number mod 1 is 0
-    }
-    if (a == Integer(0)) {
-        throw std::invalid_argument("Inverse does not exist for zero");
-    }
-    if (a < Integer(0) ) {
-        nonneg_a = -a; // Ensure a is non-negative
-    }
-    if (m < Integer(0)) {
+    if (m < Integer(0))
         throw std::invalid_argument("Modulus must be greater than zero");
-    }
-    if (Integer::gcd(a, m) != Integer(1)) {
+    if (a == Integer(0))
+        throw std::invalid_argument("Inverse does not exist for zero");
+
+    Integer mod = m.abs();
+    Integer base = a % mod;
+
+    auto [g, x, y] = extended_gcd(base, mod);
+    if (g != Integer(1))
         throw std::invalid_argument("Inverse does not exist for these values");
-    }
-        Integer M = m; // Make a copy of modulus
-        Integer A = nonneg_a;
-        Integer y = 0, x = 1;
-        if (M == 1)
-            return 0;
-    
-        while (A > 1) {
-            Integer q = A / M;
-            Integer t = M;
-            M = A % M; //remainder becomes new divisor
-            A = t; //old divisor becomes new dividend
-            t = y; // Store old y
-            y = x - q * y; // Update y to be the new coefficient
-            y = y % m; // Make sure y is positive 
-            x = t; // Update x to be the old y
-        }
-        return x;
-    }
+
+    x %= mod;
+    if (x < Integer(0))
+        x += mod;
+    return x;
+}
+
+// Member wrapper that calls the free function above
+Integer Integer::mod_inverse(const Integer& a, const Integer& m) {
+    return ::mod_inverse(a, m);
+}
 
 
 // Computes Integral Exponentiation Using Successive Squaring

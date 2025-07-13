@@ -11,12 +11,30 @@ Integer mod_inverse(const Integer& a, const Integer& m);
 
 // Arithmetic: T op Integer
 template <typename T, typename = std::enable_if_t<std::is_integral_v<T>>>
-inline Integer operator+(T lhs, const Integer& rhs) { return Integer(lhs) + rhs;}
+inline Integer operator+(T lhs, const Integer& rhs) { return Integer(lhs) + rhs; }
+
+template <typename T, typename = std::enable_if_t<std::is_integral_v<T>>>
+inline Integer operator-(T lhs, const Integer& rhs) { return Integer(lhs) - rhs; }
+
+template <typename T, typename = std::enable_if_t<std::is_integral_v<T>>>
+inline Integer operator*(T lhs, const Integer& rhs) { return Integer(lhs) * rhs; }
+
+template <typename T, typename = std::enable_if_t<std::is_integral_v<T>>>
+inline Integer operator/(T lhs, const Integer& rhs) { return Integer(lhs) / rhs; }
+
+template <typename T, typename = std::enable_if_t<std::is_integral_v<T>>>
+inline Integer operator%(T lhs, const Integer& rhs) { return Integer(lhs) % rhs; }
 
 
 // Bitwise: T op Integer
 template <typename T, typename = std::enable_if_t<std::is_integral_v<T>>>
 inline Integer operator&(T lhs, const Integer& rhs) {return Integer(lhs) & rhs;}
+
+template <typename T, typename = std::enable_if_t<std::is_integral_v<T>>>
+inline Integer operator|(T lhs, const Integer& rhs) { return Integer(lhs) | rhs; }
+
+template <typename T, typename = std::enable_if_t<std::is_integral_v<T>>>
+inline Integer operator^(T lhs, const Integer& rhs) { return Integer(lhs) ^ rhs; }
 
 
 
@@ -24,15 +42,133 @@ inline Integer operator&(T lhs, const Integer& rhs) {return Integer(lhs) & rhs;}
 template <typename T, typename = std::enable_if_t<std::is_integral_v<T>>>
 inline Integer operator&(const Integer& lhs, T rhs) {return lhs & Integer(rhs);}
 
+template <typename T, typename = std::enable_if_t<std::is_integral_v<T>>>
+inline Integer operator|(const Integer& lhs, T rhs) { return lhs | Integer(rhs); }
+
+template <typename T, typename = std::enable_if_t<std::is_integral_v<T>>>
+inline Integer operator^(const Integer& lhs, T rhs) { return lhs ^ Integer(rhs); }
+
+template <typename T, typename = std::enable_if_t<std::is_integral_v<T>>>
+inline Integer operator+(const Integer& lhs, T rhs) { return lhs + Integer(rhs); }
+
+template <typename T, typename = std::enable_if_t<std::is_integral_v<T>>>
+inline Integer operator-(const Integer& lhs, T rhs) { return lhs - Integer(rhs); }
+
+template <typename T, typename = std::enable_if_t<std::is_integral_v<T>>>
+inline Integer operator*(const Integer& lhs, T rhs) { return lhs * Integer(rhs); }
+
+template <typename T, typename = std::enable_if_t<std::is_integral_v<T>>>
+inline Integer operator/(const Integer& lhs, T rhs) { return lhs / Integer(rhs); }
+
+template <typename T, typename = std::enable_if_t<std::is_integral_v<T>>>
+inline Integer operator%(const Integer& lhs, T rhs) { return lhs % Integer(rhs); }
+
+template <typename T, typename = std::enable_if_t<std::is_integral_v<T>>>
+inline Integer operator<<(const Integer& lhs, T rhs) { return lhs << static_cast<int>(rhs); }
+
+template <typename T, typename = std::enable_if_t<std::is_integral_v<T>>>
+inline Integer operator>>(const Integer& lhs, T rhs) { return lhs >> static_cast<int>(rhs); }
+
+// Compound assignment: Integer op= T
+template <typename T, typename = std::enable_if_t<std::is_integral_v<T>>>
+inline Integer& operator+=(Integer& lhs, T rhs) { return lhs += Integer(rhs); }
+
+template <typename T, typename = std::enable_if_t<std::is_integral_v<T>>>
+inline Integer& operator-=(Integer& lhs, T rhs) { return lhs -= Integer(rhs); }
+
+template <typename T, typename = std::enable_if_t<std::is_integral_v<T>>>
+inline Integer& operator*=(Integer& lhs, T rhs) { return lhs *= Integer(rhs); }
+
+template <typename T, typename = std::enable_if_t<std::is_integral_v<T>>>
+inline Integer& operator/=(Integer& lhs, T rhs) { return lhs /= Integer(rhs); }
+
+template <typename T, typename = std::enable_if_t<std::is_integral_v<T>>>
+inline Integer& operator%=(Integer& lhs, T rhs) { return lhs %= Integer(rhs); }
+
+template <typename T, typename = std::enable_if_t<std::is_integral_v<T>>>
+inline Integer& operator&=(Integer& lhs, T rhs) { return lhs &= Integer(rhs); }
+
+template <typename T, typename = std::enable_if_t<std::is_integral_v<T>>>
+inline Integer& operator|=(Integer& lhs, T rhs) { return lhs |= Integer(rhs); }
+
+template <typename T, typename = std::enable_if_t<std::is_integral_v<T>>>
+inline Integer& operator^=(Integer& lhs, T rhs) { return lhs ^= Integer(rhs); }
+
+template <typename T, typename = std::enable_if_t<std::is_integral_v<T>>>
+inline Integer& operator<<=(Integer& lhs, T rhs) { return lhs <<= static_cast<int>(rhs); }
+
+template <typename T, typename = std::enable_if_t<std::is_integral_v<T>>>
+inline Integer& operator>>=(Integer& lhs, T rhs) { return lhs >>= static_cast<int>(rhs); }
+
 
 
 // Comparison: T op Integer
 
+template <typename T, typename = std::enable_if_t<std::is_integral_v<T>>>
+inline bool operator==(T lhs, const Integer& rhs) { return Integer(lhs) == rhs; }
+
+template <typename T, typename = std::enable_if_t<std::is_integral_v<T>>>
+inline bool operator!=(T lhs, const Integer& rhs) { return Integer(lhs) != rhs; }
+
+template <typename T, typename = std::enable_if_t<std::is_integral_v<T>>>
+inline bool operator<(T lhs, const Integer& rhs) { return Integer(lhs) < rhs; }
+
+template <typename T, typename = std::enable_if_t<std::is_integral_v<T>>>
+inline bool operator<=(T lhs, const Integer& rhs) { return Integer(lhs) <= rhs; }
+
+template <typename T, typename = std::enable_if_t<std::is_integral_v<T>>>
+inline bool operator>(T lhs, const Integer& rhs) { return Integer(lhs) > rhs; }
+
+template <typename T, typename = std::enable_if_t<std::is_integral_v<T>>>
+inline bool operator>=(T lhs, const Integer& rhs) { return Integer(lhs) >= rhs; }
+
 
 // Comparison: Integer op T
 
+template <typename T, typename = std::enable_if_t<std::is_integral_v<T>>>
+inline bool operator==(const Integer& lhs, T rhs) { return lhs == Integer(rhs); }
 
-// Modular Arithmetic: 
+template <typename T, typename = std::enable_if_t<std::is_integral_v<T>>>
+inline bool operator!=(const Integer& lhs, T rhs) { return lhs != Integer(rhs); }
+
+template <typename T, typename = std::enable_if_t<std::is_integral_v<T>>>
+inline bool operator<(const Integer& lhs, T rhs) { return lhs < Integer(rhs); }
+
+template <typename T, typename = std::enable_if_t<std::is_integral_v<T>>>
+inline bool operator<=(const Integer& lhs, T rhs) { return lhs <= Integer(rhs); }
+
+template <typename T, typename = std::enable_if_t<std::is_integral_v<T>>>
+inline bool operator>(const Integer& lhs, T rhs) { return lhs > Integer(rhs); }
+
+template <typename T, typename = std::enable_if_t<std::is_integral_v<T>>>
+inline bool operator>=(const Integer& lhs, T rhs) { return lhs >= Integer(rhs); }
+
+
+// Modular Arithmetic:
+
+template <typename T, typename = std::enable_if_t<std::is_integral_v<T>>>
+inline Integer mod_inverse(const Integer& a, T m) { return mod_inverse(a, Integer(m)); }
+
+template <typename T, typename = std::enable_if_t<std::is_integral_v<T>>>
+inline Integer mod_inverse(T a, const Integer& m) { return mod_inverse(Integer(a), m); }
+
+template <typename T, typename = std::enable_if_t<std::is_integral_v<T>>>
+inline Integer power(T base, const Integer& exponent) { return Integer(base).power(exponent); }
+
+template <typename T1, typename T2, typename = std::enable_if_t<std::is_integral_v<T1> && std::is_integral_v<T2>>>
+inline Integer power_mod(T1 base, const Integer& exponent, T2 modulus) {
+    return Integer(base).power_mod(exponent, Integer(modulus));
+}
+
+template <typename T1, typename T2, typename = std::enable_if_t<std::is_integral_v<T1> && std::is_integral_v<T2>>>
+inline Integer power_mod(const Integer& base, T1 exponent, const Integer& modulus) {
+    return base.power_mod(Integer(exponent), modulus);
+}
+
+template <typename T1, typename T2, typename = std::enable_if_t<std::is_integral_v<T1> && std::is_integral_v<T2>>>
+inline Integer power_mod(T1 base, T2 exponent, const Integer& modulus) {
+    return Integer(base).power_mod(Integer(exponent), modulus);
+}
 
 
 /*
