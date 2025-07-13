@@ -157,9 +157,9 @@ TEST(ComparisonTests, EdgeCasesNegative) {
     EXPECT_LE(d, c);
     EXPECT_GT(c, d);
     EXPECT_GE(c, d);
-    
-    Integer e("-123456789012345678901234567890");
-    Integer f("-123456789012345678901234567891");
+    Integer f("-123456789012345678901234567890");
+    Integer e("-123456789012345678901234567891");
+   
     EXPECT_LT(e, f);
     EXPECT_LE(e, f);
     EXPECT_GT(f, e);

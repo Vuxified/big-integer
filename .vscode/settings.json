@@ -4,6 +4,9 @@
         "ostream": "cpp",
         "cctype": "cpp",
         "algorithm": "cpp",
-        "tuple": "cpp"
+        "tuple": "cpp",
+        "cstdlib": "cpp",
+        "string": "cpp",
+        "vector": "cpp"
     }
 }

@@ -90,7 +90,6 @@ Integer& Integer::operator*=(const Integer& rhs) {
     }
 
     std::vector<Limb> result(limbs.size() + rhs.limbs.size(), 0);
-    // The vectors are 32 bit values.  You can use 64 bit intermediate calculations to estimate carry instances
     for (size_t i = 0; i < limbs.size(); ++i) {
         uint64_t carry = 0;
         for (size_t j = 0; j < rhs.limbs.size(); ++j) {
@@ -98,7 +97,16 @@ Integer& Integer::operator*=(const Integer& rhs) {
             result[i + j] = static_cast<Limb>(cur & 0xFFFFFFFFu);
             carry = cur >> 32;
         }
-        result[i + rhs.limbs.size()] += static_cast<Limb>(carry);
+        size_t k = i + rhs.limbs.size();
+        uint64_t cur = static_cast<uint64_t>(result[k]) + carry;
+        result[k] = static_cast<Limb>(cur & 0xFFFFFFFFu);
+        carry = cur >> 32;
+        while (carry != 0) {
+            ++k;
+            cur = static_cast<uint64_t>(result[k]) + carry;
+            result[k] = static_cast<Limb>(cur & 0xFFFFFFFFu);
+            carry = cur >> 32;
+        }
     }
 
     limbs.swap(result);
