@@ -27,7 +27,6 @@ static std::tuple<Integer, Integer, Integer> extended_gcd(const Integer& a, cons
     return {old_r, old_s, old_t};
 }
 
-// Returns x such that (a * x) % m == 1
 Integer mod_inverse(const Integer& a, const Integer& m) {
     Integer nonneg_a = a;
     if (m == Integer(0)) {
@@ -39,7 +38,7 @@ Integer mod_inverse(const Integer& a, const Integer& m) {
     if (a == Integer(0)) {
         throw std::invalid_argument("Inverse does not exist for zero");
     }
-    if (a < Integer(0) ) {
+    if (a < Integer(0)) {
         nonneg_a = -a; // Ensure a is non-negative
     }
     if (m < Integer(0)) {
@@ -48,26 +47,28 @@ Integer mod_inverse(const Integer& a, const Integer& m) {
     if (Integer::gcd(a, m) != Integer(1)) {
         throw std::invalid_argument("Inverse does not exist for these values");
     }
-        Integer M = m; // Make a copy of modulus
-        Integer A = nonneg_a;
-        Integer y = 0, x = 1;
-        if (M == 1)
-            return 0;
-    
-        while (A > 1) {
-            Integer q = A / M;
-            Integer t = M;
-            M = A % M; //remainder becomes new divisor
-            A = t; //old divisor becomes new dividend
-            t = y; // Store old y
-            y = x - q * y; // Update y to be the new coefficient
-            y = y % m; // Make sure y is positive 
-            x = t; // Update x to be the old y
-        }
-        return x;
+
+    Integer M = m; // Make a copy of modulus
+    Integer A = nonneg_a;
+    Integer y = 0, x = 1;
+    if (M == 1)
+        return 0;
+
+    while (A > 1) {
+        Integer q = A / M;
+        Integer t = M;
+        M = A % M; // remainder becomes new divisor
+        A = t;      // old divisor becomes new dividend
+        t = y;      // Store old y
+        y = x - q * y; // Update y to be the new coefficient
+        y = y % m;     // Ensure y is within modulus
+        x = t;      // Update x to be the old y
     }
-
-
+    x %= m;
+    if (x < Integer(0))
+        x += m;
+    return x;
+}
 // Computes Integral Exponentiation Using Successive Squaring
 Integer Integer::power(const Integer& exponent) const {
     if (exponent.isNegative)
